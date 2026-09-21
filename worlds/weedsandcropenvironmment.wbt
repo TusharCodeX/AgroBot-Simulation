@@ -1,0 +1,60 @@
+#VRML_SIM R2025a utf8
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+
+WorldInfo {
+  title "AgroBot Cloud"
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation -0.2 0.95 0.25 1.15
+  position -1.5 1.5 1.5
+}
+TexturedBackground {}
+TexturedBackgroundLight {}
+
+Floor {
+  translation 0 0 0
+  size 20 20
+  appearance PBRAppearance {
+    baseColor 0.3 0.4 0.2
+    roughness 0.9
+    metalness 0
+  }
+}
+
+DEF WEED Solid {
+  translation 1.5 0.0 0.15
+  children [ Shape { appearance PBRAppearance { baseColor 0.9 0.1 0.1 } geometry Sphere { radius 0.06 } } ]
+  name "target_weed"
+}
+
+Robot {
+  translation 0 0 0.1
+  name "AgroBot_6WD"
+  children [
+    Pose {
+      translation 0 0 0.05
+      children [
+        Shape {
+          appearance DEF CHASSIS_APP PBRAppearance { baseColor 0.7 0.7 0.7 metalness 0.8 }
+          geometry Box { size 0.45 0.20 0.10 }
+        }
+      ]
+    }
+    
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor 0.26 0.14 0.0 } device [ RotationalMotor { name "blade_left_motor" } ] endPoint Solid { translation 0.26 0.14 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.8 0.8 0.9 } geometry Cylinder { height 0.01 radius 0.07 } } ] boundingObject Cylinder { height 0.01 radius 0.07 } physics Physics { mass 0.5 } } }
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor 0.26 -0.14 0.0 } device [ RotationalMotor { name "blade_right_motor" } ] endPoint Solid { translation 0.26 -0.14 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.8 0.8 0.9 } geometry Cylinder { height 0.01 radius 0.07 } } ] boundingObject Cylinder { height 0.01 radius 0.07 } physics Physics { mass 0.5 } } }
+    
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor 0.12 0.13 0.0 } device [ RotationalMotor { name "fm_left_motor" } ] endPoint Solid { translation 0.12 0.13 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.04 radius 0.06 } } ] boundingObject Cylinder { height 0.04 radius 0.06 } physics Physics { mass 1.0 } } }
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor 0.12 -0.13 0.0 } device [ RotationalMotor { name "fm_right_motor" } ] endPoint Solid { translation 0.12 -0.13 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.04 radius 0.06 } } ] boundingObject Cylinder { height 0.04 radius 0.06 } physics Physics { mass 1.0 } } }
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor -0.03 0.13 0.0 } device [ RotationalMotor { name "m_left_motor" } ] endPoint Solid { translation -0.03 0.13 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.04 radius 0.06 } } ] boundingObject Cylinder { height 0.04 radius 0.06 } physics Physics { mass 1.0 } } }
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor -0.03 -0.13 0.0 } device [ RotationalMotor { name "m_right_motor" } ] endPoint Solid { translation -0.03 -0.13 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.04 radius 0.06 } } ] boundingObject Cylinder { height 0.04 radius 0.06 } physics Physics { mass 1.0 } } }
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor -0.18 0.13 0.0 } device [ RotationalMotor { name "r_left_motor" } ] endPoint Solid { translation -0.18 0.13 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.04 radius 0.06 } } ] boundingObject Cylinder { height 0.04 radius 0.06 } physics Physics { mass 1.0 } } }
+    HingeJoint { jointParameters HingeJointParameters { axis 0 1 0 anchor -0.18 -0.13 0.0 } device [ RotationalMotor { name "r_right_motor" } ] endPoint Solid { translation -0.18 -0.13 0.0 rotation 1 0 0 1.5708 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.04 radius 0.06 } } ] boundingObject Cylinder { height 0.04 radius 0.06 } physics Physics { mass 1.0 } } }
+  ]
+  boundingObject Pose { translation 0 0 0.05 children [ Box { size 0.45 0.20 0.10 } ] }
+  physics Physics { mass 12.0 }
+  controller "my_controller"
+}
